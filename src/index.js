@@ -19,25 +19,26 @@ list.insertAdjacentHTML('beforeend', renderMarkup);
 
 checkBox.addEventListener('change', checkTheme);
 
+const changeTheme = (del, add) => {
+  body.classList.remove(del);
+  body.classList.add(add);
+};
+
 function checkTheme(e) {
   if (e.target.checked) {
-    body.classList.remove('light-theme');
-    body.classList.add('dark-theme');
+    changeTheme(Theme.LIGHT, Theme.DARK);
     localStorage.setItem('THEME', Theme.DARK);
   } else {
-    body.classList.remove('dark-theme');
-    body.classList.add('light-theme');
+    changeTheme(Theme.DARK, Theme.LIGHT);
     localStorage.setItem('THEME', Theme.LIGHT);
   }
 }
 
 let CurrentTheme = localStorage.getItem('THEME');
-if (CurrentTheme === 'light-theme') {
-  body.classList.remove('dark-theme');
-  body.classList.add('light-theme');
+if (CurrentTheme === Theme.LIGHT) {
+  changeTheme(Theme.DARK, Theme.LIGHT);
   checkBox.checked = false;
 } else {
-  body.classList.remove('light-theme');
-  body.classList.add('dark-theme');
+  changeTheme(Theme.LIGHT, Theme.DARK);
   checkBox.checked = true;
 }
